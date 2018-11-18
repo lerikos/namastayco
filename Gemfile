@@ -61,6 +61,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'carrierwave', '~> 1.0'
+gem 'mini_magick', '~> 4.8'
+gem 'trix', '0.11.2', :git => "git://github.com/DRBragg/trix.git"
+
 gem 'devise'
 gem 'bulma-rails'
 gem 'simple_form'
