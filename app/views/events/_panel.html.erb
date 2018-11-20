@@ -1,0 +1,25 @@
+<nav class="panel">
+  <p class="text-uppercase has-text-gray pv1 f6">filter by event type</p>
+
+  <ul class="mb3 pa0">
+    <li class="pv1">
+      <%= link_to 'All', events_path, class: "button is-fullwidth is-dark" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Class', events_path(event_type: "Class"), class: "button is-fullwidth is-primary" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Day Retreat', events_path(event_type: "Day Retreat"), class: "button is-fullwidth is-link" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Trip', events_path(event_type: "Trip"), class: "button is-fullwidth is-warning" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Other', events_path(event_type: "Other"), class: "button is-fullwidth is-info" %>
+    </li>
+  </ul>
+</nav>

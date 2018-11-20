@@ -1,39 +1,51 @@
-<p id="notice"><%= notice %></p>
+<div class="columns pt4 pb7">
+  <div class="column is-7 is-offset-1">
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+    <p class="f7"><i class="fa fa-clock"></i> Posted <%= time_ago_in_words(@event.created_at) %> ago</p>
+    <h1 class="title is-2"><%= @event.title %></h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+    <ul class="list pb4">
+      <li class="inline-block f6 pr2"><%= event_type(@event.event_type) %></li>
+      <li class="inline-block f6 ph2"><i class="fa fa-pin"></i> <%= @event.location %></li>
+      <% if @event.free? %>
+        <li class="inline-block f6 ph2"><i class="fa fa-gift"></i> Free event </li>
+      <% end %>
+    </ul>
 
-<p>
-  <strong>Organiser url:</strong>
-  <%= @event.organiser_url %>
-</p>
+    <div class="content text-serif f4">
+      <%= @event.description.html_safe %>
+    </div>
 
-<p>
-  <strong>Free:</strong>
-  <%= @event.free %>
-</p>
+    <%= link_to 'Register for this event', @event.buy_url, class:"button is-rounded is-large is-fullwidth is-link" %>
 
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
+  </div>
 
-<p>
-  <strong>Event type:</strong>
-  <%= @event.event_type %>
-</p>
+  <div class="column is-2 is-offset-1 has-text-centered">
 
-<p>
-  <strong>Buy url:</strong>
-  <%= @event.buy_url %>
-</p>
+    <% if !@event.avatar.file.nil? %>
+      <%= link_to image_tag(@event.avatar_url(:thumb), alt: @event.organiser, class: "has-text-centered"), @event.organiser_url %>
+    <% end %>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+    <h5 class="is-5 has-text-centered"><%= link_to @event.organiser, @event.organiser_url %></h5>
+
+    <div class="mt2 mb4">
+    <%= link_to @event.organiser_url do %>
+      <i class="fa fa-globe"></i>
+    <% end %>
+    </div>
+
+    <%= link_to 'Register for this event', @event.buy_url, class:"button is-rounded is-fullwidth is-link" %>
+
+    <% if current_user.try(:admin) || event_author(@job) %>
+      <ul class="pv3">
+        <li class="pv1 f6">Admin controls: </li>
+        <li class="pv1 inline-block">
+          <%= link_to 'View', @event, class: 'button is-small is-link is-outlined' %></li>
+        <li class="pv1 inline-block">
+          <%= link_to 'Edit', edit_event_path(@event), class: 'button is-small is-link is-outlined' %></li>
+        <li class="pv1 inline-block">
+          <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-small is-link is-outlined' %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>

@@ -1,19 +1,98 @@
-
-<%= simple_form_for(@event) do |f| %>
+<%= simple_form_for @event, html: { multipart: true } do |f| %>
   <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description %>
-    <%= f.input :organiser_url %>
-    <%= f.input :free %>
-    <%= f.input :location %>
-    <%= f.input :event_type %>
-    <%= f.input :buy_url %>
-  </div>
+      <div class="field">
+        <div class="control">
+        <%= f.input :title, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, placeholder: "Urban Yoga Retreat" %>
+        </div>
+      </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+      <div class="field">
+        <div class="control">
+          <%= f.input :buy_url, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, label: "Registration Link"  %>
+        </div>
+      </div>
+
+
+    <div class="columns">
+      <div class="field column is-4">
+        <div class="control">
+          <label class="label">Event Type:</label>
+          <div class="control has-icons-left">
+            <span class="select">
+              <%= f.input_field :event_type, required: true, collection: Event::EVENT_TYPES, prompt: "Select an event type" %>
+            </span>
+            <span class="icon is-small is-left">
+              <i class="fa fa-option-horizontal"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+
+        <div class="field">
+          <div class="control">
+            <%= f.input :location, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, hint: 'Examples: "Byron Bay, NSW", "Margaret River, WA", "Bali"' %>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label for="event[free]">
+              <%= f.input :free, required: false, input_html: { class: "checkbox"}, wrapper: false, label: false %>
+              Event is free
+            </label><i class="fa fa-gift"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="field">
+        <div class="control">
+          <%= f.input :description, as: :trix_editor, required: true, input_html: { class: "textarea" }, wrapper: false, label_html: { class: "label" } %>
+        </div>
+      </div>
+
+
+    <div class="columns">
+
+      <div class="field column">
+        <div class="control">
+          <%= f.input :organiser, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, label: "Organiser" %>
+        </div>
+      </div>
+
+      <div class="field column">
+        <div class="control">
+          <%= f.input :organiser_url, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, label: "Organiser Website", placeholder: "http://organiser.com" %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns">
+      <div class="field column is-4">
+        <div class="control">
+          <label class="label">Logo Image</label>
+          <div class="file">
+            <label class="file-label">
+              <%= f.input :avatar, as: :file, required: false, input_html: { class:"file-input event-avatar" }, label: false, wrapper: false %>
+                <span class="file-cta">
+                  <span class="file-icon"><i class="fa fa-upload"></i></span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <output id="list"></output>
+      </div>
+    </div>
+
+    <hr />
+
+    <%= f.button :submit, class: "button is-primary is-large is-rounded mv4" %>
+
 <% end %>
